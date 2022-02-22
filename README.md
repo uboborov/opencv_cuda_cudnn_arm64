@@ -95,8 +95,10 @@ and the directory tree ./usr/lib/aarch64-linux-gnu looks like this:
 └── libnvblas.so.10.2.2.89
 ```
 4. Download cuDNN libraries from nvidia:
+```
 https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.6/JETPACK_46_b194/libcudnn8_8.2.1.32-1+cuda10.2_arm64.deb
 https://developer.nvidia.com/assets/embedded/secure/tools/files/jetpack-sdks/jetpack-4.6/JETPACK_46_b194/libcudnn8-dev_8.2.1.32-1+cuda10.2_arm64.deb
+```
 5. Put libcudnn8_8.2.1.32-1+cuda10.2_arm64.deb and libcudnn8-dev_8.2.1.32-1+cuda10.2_arm64.deb to this repo location/cudnn folder
 6. Upack libraries libcudnn8_8.2.1.32-1+cuda10.2_arm64.deb and libcudnn8-dev_8.2.1.32-1+cuda10.2_arm64.deb to the ./usr/lib/aarch64-linux-gnu
 after upacking the directory tree ./usr/lib/aarch64-linux-gnu lookslike this:
@@ -124,12 +126,18 @@ after upacking the directory tree ./usr/lib/aarch64-linux-gnu lookslike this:
 └── libnvblas.so.10.2.2.89
 ```
 7. Afrer all unpacking done run docker build for cuda and cudnn from this repo folder:
+```
 sudo docker build -t "aarch64-cuda10-2" -f aarch64-cuda-10-2-ubuntu18.dockerfile .
+```
 8. After build done run docker build for opencv-4.5.3 from this repo folder:
+```
 sudo docker build -t "opencv-cuda" -f build-opencv-cuda.dockerfile .
+```
 9. After build done run the container and copy build opencv libraries to some location:
+```
 docker cp $container_id:/opencv-4.5.3/build_aarch64_cuda/ ./opencv-4.5.3
-10. copy opencv libraries to ./usr/local/lib
+```
+10. copy opencv libraries from ./opencv-4.5.3 to ./usr/local/lib
 and the directory tree ./usr/local/lib looks like this:
 ```
 ├── libopencv_aruco.so -> libopencv_aruco.so.4.5
@@ -326,9 +334,13 @@ and the directory tree ./usr/local/lib looks like this:
 └── libopencv_xphoto.so.4.5.3
 ```
 11. Copy folder ./usr to the jetson nano root over NFS or SD card reader:
+```
 sudo cp -aR directory_nfs_path/usr/* /usr
+```
 or
+```
 sudo cp -aR ./usr/* mounted_sd_path/usr
+```
 12. Update ld.so.conf.d on your jetson nano board:
 create file /etc/ld.so.conf.d/cuda-10-2.conf and add paths:
 ```
